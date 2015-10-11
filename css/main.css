@@ -4,11 +4,10 @@
   font-family: 'Shift', sans-serif;
   color: #9933CC;
 }
-.topper ul1{
+.left li {
   display: inline;
-  left: 5px;
 }
-.topper ul2{
+
+.right li {
   display: inline;
-  right: 5px;
 }
