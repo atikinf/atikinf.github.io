@@ -1,13 +1,14 @@
 /*put yer css here m8y*/
 .topper {
-  top: 4px;
   font-family: 'Shift', sans-serif;
-  color: #9933CC;
+  color: black; /*placeholder*/
 }
 .left li {
   display: inline;
+  left: 4px;
 }
 
 .right li {
   display: inline;
+  right: 4px;
 }
