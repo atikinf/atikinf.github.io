@@ -1,4 +1,5 @@
 /*put yer css here m8y*/
-.topper ul{
+.topper ul li{
+  font-family: 'Shift', sans-serif;
   color: #9933CC;
 }
