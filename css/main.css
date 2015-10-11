@@ -1,6 +1,14 @@
 /*put yer css here m8y*/
 .topper {
+  top: 4px;
   font-family: 'Shift', sans-serif;
   color: #9933CC;
+}
+.topper ul1{
   display: inline;
+  left: 5px;
+}
+.topper ul2{
+  display: inline;
+  right: 5px;
 }
