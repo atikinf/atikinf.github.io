@@ -1,13 +1,15 @@
 /*put yer css here m8y*/
 .topper {
   /*background-color: #E0EBEB;*/
+  position: center;
   top: 4px;
   font-family: 'Shift', sans-serif;
   color: #3C3C44;
 }
 .left li {
   display: inline;
-  padding: 10px;
+  padding: 4px;
+  text-decoration: none;
 }
 .left {
   list-style-type:none;
