@@ -10,11 +10,13 @@
   display: inline;
   padding: 4px;
   color: #3C3C44;
-  text-decoration: none;
 }
 .left {
   list-style-type:none;
   margin; 0;
   padding: 0;
+}
+a {
+  text-decoration: none
 }
 
