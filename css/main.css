@@ -19,6 +19,7 @@
   padding: 0;
 }
 a:visited { text-decoration: none; }
+a:hover {text-decoration: underline; }
 a {
   text-decoration: none
 }
