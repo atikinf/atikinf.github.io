@@ -6,12 +6,12 @@
   text-align: center;
   top: 4px;
   font-family: 'Shift', sans-serif;
-  color: #3C3C44;
+  color: #707082;
 }
 .left li {
   display: inline;
   padding: 4px;
-  color: #3C3C44;
+  color: #707082;
 }
 .left {
   list-style-type:none;
@@ -19,7 +19,8 @@
   padding: 0;
 }
 a:visited { text-decoration: none; }
-a:hover {text-decoration: underline; }
+a:hover {color:#3C3C44;
+           /*text-decoration: underline*/; }
 a {
   text-decoration: none
 }
