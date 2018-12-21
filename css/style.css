@@ -109,15 +109,15 @@ html {
   height: 100%;
 }
 
-a {
-  text-decoration: none;
-  color: gray
-  outline: none !important;
-}
 a:visited { text-decoration: none; color: rgb(107, 122, 142); }
 a:hover { text-decoration: none; color: gray; }
 a:focus { text-decoration: none; color: gray; }
 a:hover, a:active { text-decoration: none; color: gray }
+a {
+  text-decoration: none;
+  color: gray;
+  outline: none !important;
+}
 
 body, h1 {
   color: #404040;
