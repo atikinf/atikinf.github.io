@@ -57,7 +57,7 @@ class BarGraph {
     // title
     this.svg.append("text")
             .attr("x", 400)             
-            .attr("y", 20)
+            .attr("y", 25)
             .attr("text-anchor", "middle")  
             .style("font-size", "28px") 
             .text(title);
@@ -426,7 +426,7 @@ class StackedGraph {
 }
 
 class RectangularHeatmap {
-	constructor(id, data, xval, yval, val, xlabel, ylabel) {
+	constructor(id, data, xval, yval, val, xlabel, ylabel, title) {
 		data.forEach(function(d) {
 			d[val] = +d[val];
 		});
@@ -451,14 +451,12 @@ class RectangularHeatmap {
 
 		let y = d3.scaleBand()
 		.domain(y_elements)
-		.range([50, 50 + y_elements.length * itemSize])
+		.range([80, 80 + y_elements.length * itemSize])
 
 
 		let yAxis = d3.axisLeft().scale(y);
 
-		let scale = chroma.scale(['white', 'red']).domain([d3.min(data, function(d) { return d["count"]; }), 
-				d3.max(data, function(d) { return d["count"]; })]);
-		scale = d3.scaleLinear().domain([0,  d3.max(data, function(d) { return d["count"]; })]).range(['white', 'red']);
+		let scale = d3.scaleLinear().domain([0,  d3.max(data, function(d) { return d["count"]; })]).range(['white', 'red']);
 
 
    let cells = this.svg.selectAll('rect')
@@ -472,7 +470,7 @@ class RectangularHeatmap {
         .attr('fill', function(d) { return scale(d["count"]); });
 
 			
-	    this.svg.append("g").attr("transform", "translate(0, 50)").call(xAxis);
+	    this.svg.append("g").attr("transform", "translate(0, 80)").call(xAxis);
 	    // 	''  y-axis
 	    this.svg.append("g").call(yAxis);
 
@@ -492,50 +490,55 @@ class RectangularHeatmap {
 
         this.svg.append("rect")
             .attr("x", 0)
-            .attr("y", 300)
+            .attr("y", 350)
             .attr("width", width)
             .attr("height", 30)
             .style("stroke", "black")
             .style("stroke-width", 2)
             .style("fill", "url(#linear-gradient)"); 
 
+	 // title
+	    this.svg.append("text")
+            .attr("x", 400)             
+            .attr("y", 25)
+            .attr("text-anchor", "middle")  
+            .style("font-size", "28px") 
+            .text(title);
 	    		// x-axis label
 		this.svg.append("text")
 		.attr("x", 400)             
-		.attr("y", 20)
+		.attr("y", 55)
 		.attr("text-anchor", "middle")  
 		.style("font-size", "18px") 
 		.text(xlabel);
 
-		// y-axis label
 		this.svg.append("text")
 		.attr("transform", "rotate(-90)")
 		.attr("y", -50)
-		.attr("x", -50 - itemSize * y_elements.length / 2)
+		.attr("x", -80 - itemSize * y_elements.length / 2)
 		.style("font-size", "18px")
 		.style("text-anchor", "middle")
 		.text(ylabel); 
 
-			    		// x-axis label
 		this.svg.append("text")
 		.attr("x", 0)             
-		.attr("y", 350)
+		.attr("y", 400)
 		.attr("text-anchor", "middle")  
 		.style("font-size", "18px") 
 		.text(0);
 
 		this.svg.append("text")
 		.attr("x", width)             
-		.attr("y", 350)
+		.attr("y", 400)
 		.attr("text-anchor", "middle")  
 		.style("font-size", "18px") 
 		.text(d3.max(data, function(d) { return d["count"]; }));
 
 		this.svg.append("text")
 		.attr("x", -50)             
-		.attr("y", 320)
+		.attr("y", 370)
 		.attr("text-anchor", "middle")  
-		.style("font-size", "18px") 
+		.style("font-size", "14px") 
 		.text("Color scale:");
 	}
 }
@@ -586,6 +589,6 @@ whenDocumentLoaded(() => {
 			"Number of Crimes Committed", "", color="category");
 	});
 	d3.csv("data/crime_times.csv").then(function (data) {
-		const plot = new RectangularHeatmap("heatmap", data, "Hour", "Day", "count", "Hour", "Day of the Week");
+		const plot = new RectangularHeatmap("heatmap", data, "Hour", "Day", "count", "Hour", "Day of the Week", "Hour and Day of the Week Crime Trends");
 	});
 });
