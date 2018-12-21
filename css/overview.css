@@ -1,0 +1,44 @@
+#nav {
+	height: auto;
+	background-color: rgb(32, 32, 32);
+}
+
+body {
+	margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#title {
+  padding: 10px;
+  text-align: center;
+}
+
+body, h1 {
+  color: #404040;
+}
+
+h1 {
+  margin: 0 auto;
+  font-weight: 800;
+  font-size: 80px;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}

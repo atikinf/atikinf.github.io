@@ -1,0 +1,139 @@
+#map {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	background-color: grey;
+}
+
+#nav {
+	height: auto;
+	background-color: rgb(32, 32, 32);
+  font-size: 16pt;
+  font-family: sans-serif;
+}
+
+#title {
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#title h1 {
+  margin-bottom: 20px;
+  font-weight: 800;
+  font-size: 60px;
+}
+
+#title h3 {
+  /*font-style: italic;*/
+  font-weight: 300;
+  font-size: 25px;
+  font-style: italic;
+}
+
+.subtitle {
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.subtitle h2 {
+  font-weight: 700;
+  font-size: 30px;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#content {
+  width: 60%;
+  padding-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#content p {
+  line-height: 1.5;
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 15pt;
+  font-family: 'Lora', 'Times New Roman', serif;
+}
+
+.svg_container {
+  height: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.text_left {
+  margin-left:auto;
+  margin-right:auto;
+  width: 60%;
+  text-align: left;
+}
+
+#nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+#nav li {
+  float: left;
+}
+
+#nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: gray
+}
+a:visited { text-decoration: none; color: rgb(107, 122, 142); }
+a:hover { text-decoration: none; color: gray; }
+a:focus { text-decoration: none; color: gray; }
+a:hover, a:active { text-decoration: none; color: gray }
+
+body, h1 {
+  color: #404040;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+hr {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border:none;
+  border-top:1px dotted black;
+  color: black;
+  background-color:#fff;
+  height:1px;
+  width:70%;
+}
