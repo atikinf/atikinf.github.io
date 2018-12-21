@@ -394,7 +394,7 @@ class StackedGraph {
 		this.svg.append("text")
 		.attr("x", 100)
 		.attr("y", 90)
-		.style("font-size", "18px")
+		.style("font-size", "14px")
 		.text("Felonies"); 
 
 		// misdemeanor legend
@@ -407,7 +407,7 @@ class StackedGraph {
 		this.svg.append("text")
 		.attr("x", 100)
 		.attr("y", 115)
-		.style("font-size", "18px")
+		.style("font-size", "14px")
 		.text("Misdemeanors"); 
 
 		// violation legend
@@ -420,7 +420,7 @@ class StackedGraph {
 		this.svg.append("text")
 		.attr("x", 100)
 		.attr("y", 140)
-		.style("font-size", "18px")
+		.style("font-size", "14px")
 		.text("Violations"); 
 	}
 }
