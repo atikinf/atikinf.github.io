@@ -2,22 +2,118 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>NYC : Bird's eye of a Thousand Felonies</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-  <script src="https://cdn-webgl.eegeo.com/eegeojs/api/v0.1.780/eegeo.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="./dist/leaflet-heat.js"></script>
-  <script src="js/3d_map.js"></script>
+  <title>NYC Crime Overview</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- D3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.0.2/chroma.min.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
+
 <body>
   <div id="nav"> 
     <ul>
-      <li><a href="overview.html">Overview</a></li>
-      <li><a href="index.html">3D Crime Map</a></li>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="overview.html">3D Crime Map</a></li>
     </ul> 
   </div>
-  <div id="map"></div>
+  <div id="title">
+    <h1>Crime in Metropolis</h1>
+    <!-- <img src="images/police_tape.png" height=8px width=200px> -->
+    <h3>A data-story of crime in New York City</h3>
+  </div>
 
+  <div id="content">
+    <p>New York City is the largest city in America, with over <i>8.5 million</i> inhabitants. With so many tales of gangsters ruling the mid-century streets and a rich history of shady characters, it's natural to expect that this massive city must come with massive amounts of crime.</p>
+
+    <p>Fortunately, <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i">detailed crime data</a> has been collected by the city of New York since 2006, giving us the chance to peer into the nature of the city's crime.</p>
+
+    <p>On this page, you can find an overview of our findings on the city's crime. This includes breakdowns of when crimes happen as well as what types are the most common and a number of other insights.</p>
+
+    <p>On the <a href="overview.html">3D Crime Map</a> page, you can find an interactive map of New York City with several hundred sampled crimes mapped across the city. You can personally see what the landscape is like where each crime occured and, by clicking on crimes, you can get an idea of what they involved.</p>
+
+    <!-- INSERT A BREAK OF SOME SORT - potentiall crime tape, image -->
+
+    <div class="subtitle">
+      <h2>New York in Numbers</h2>
+    </div>
+
+    <p>Between 2006 and 2017, on average there were roughly 475,000 crimes committed per year in New York City. However, there is a general downward trend in these numbers:</p>
+
+    <!-- Yearly crime count -->
+    <div class="svg_container">
+      <svg id="year_graph" viewBox="0 0 800 500" ></svg>
+    </div>
+
+    <p>In 2017, the most recent year for which we have complete data, the breakdown for crimes with valid information is as follows:
+
+    <div class="text_center">
+      <div class="text_left">
+        <br><b><em>458152</em> Total Crimes
+        <br style="line-height: 10px" />
+        <hr>
+
+        <em>66303</em> Violations (the least severe category of crimes)
+        <br style="line-height: 10px" />
+        <hr>
+
+        <em>253999</em> Misdemeanors (the second least severe category of crimes)
+        <br style="line-height: 10px" />
+        <hr>
+
+        <em>137830</em> Felonies (the most severe category of crimes)</b><br><br><br>
+      </div>
+    </div>
+
+    For some perspective on the most common types of specific crimes below, the ten most common specific crimes committed are displayed below.
+  </p>
+
+     <!-- Population Borough Graph -->
+    <div class="svg_container">
+      <svg id="freq_graph" viewBox="-50 0 850 500" ></svg>
+    </div>
+
+    <p>The most frequently committed crime is petit larceny (a misdemeanor), which in New York is defined to be theft of objects with monetary value of $1000 or less. Only one violation is on the top ten: second degree harassment. This is a general crime that encompasses other specific types of infractions fall under the general mantle to “alarm or annoy another person”.</p>
+
+    <p>Two types of assaults appear in the top ten. 3rd degree assault is a misdemeanor, and includes lesser injuries such as causing black eyes or bruises. Felony assault is, as is implied by the category, more severe in scope. The remaining felonies in the top ten involve “standard” crimes such as drug use, burglary, and robbery.</p>
+
+    
+    <div class="subtitle">
+      <h2>Patterns in Crime</h2>
+    </div>
+
+    <p>Further trends reveal themselves when examining crime on a monthly, daily, and hourly basis.</p>
+    <!-- Population Graph -->
+    <div class="svg_container">
+      <svg id="month_graph" viewBox="-50 0 850 500" ></svg>
+    </div>
+
+    <p>As can be seen, crime is at its highest in the warmer months of the year (April through October), and decreases in the winter.</p>
+     <div class="svg_container">
+      <svg id="stack_graph" viewBox="-50 0 850 500" ></svg>
+    </div>
+
+    <p>Crime reaches its peak in the afternoon and evening. As time passes late into the night and early in the morning, the amount of crimes decreases to a low at around 5-6 AM. The proportions of the different categories of crimes remain roughly the same across hours; however, there are relatively less violations late in the night. This alludes to a rough correlation between the hour of the day and the severity of the crime; a crime committed late at night is more likely to be violent or more severe in nature compared to one during the day.</p>
+
+    <div class="svg_container">
+      <svg id="heatmap" viewBox="-50 0 850 500" ></svg>
+    </div>
+
+    <p>Peak crime for the city occurs on weekdays in the afternoons. On weekdays, crime is much lower in the mornings compared to afternoons. However, it can be seen that these patterns shift over the weekends. While the amount of crime on weekends never quite reaches the high peaks of weekdays, the daily peaks are reached later in the night. The heightened frequency of crime continues until 4 AM on Saturday and Sunday morning, coinciding with when the nightlife would generally be reaching its peak.</p>
+
+   <div class="subtitle">
+      <h2>Geographic Data and Maps</h2>
+    </div>
+
+    <p>New York City is comprised of five administrative regions called boroughs. As the NYC data also contains information about the locations of the crimes, it lends itself to analysis of geographic patterns that manifest themselves.</p>
+
+    <div class="svg_container">
+      <svg id="boro_graph" viewBox="-50 0 850 500" ></svg>
+    </div>
+  </div>
+  
+  <!-- Visualizations -->
+  <script src="js/custom.js"></script>
 </body>
 </html>
