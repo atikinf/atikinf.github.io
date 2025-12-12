@@ -433,9 +433,8 @@ class RectangularHeatmap {
 
 		this.svg = d3.select("#" + id);
 
-		let x_elements = d3.set(data.map(function(d) { return d[xval]; } )).values();
-		let y_elements = d3.set(data.map(function(d) { return d[yval]; } )).values();
-
+		let x_elements = Array.from(new Set(data.map(function(d) { return d[xval]; } )));
+		let y_elements = Array.from(new Set(data.map(function(d) { return d[yval]; } )));
 
 		let width = 800;
 		let height = 450;

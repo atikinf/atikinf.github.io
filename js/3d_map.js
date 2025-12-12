@@ -8,28 +8,26 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
-  var map = L.eeGeo.map('map', '68a4024c73af36a9947c4a6c6362b3c3', {
+  var map = L.map('map', {
     center: [40.7590, -73.9845],
     zoom: 10
   });
 
-  map.themes.setTime(L.eeGeo.themes.time.Night);
-  
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+  var baseMaps = {
+    "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map)
+  };
 
   var FelonyIcon = L.Icon.extend({
     options: {
-            iconSize:     [34, 34], // size of the icon
+          iconSize:     [34, 34], // size of the icon
           iconAnchor:   [17, 17], // point of the icon which will correspond to marker's location
           popupAnchor:  [-3, -3] // point from which the popup should open relative to the iconAnchor
         }
       });
 
-  
-  
-  
 
   var assaultIcon = new FelonyIcon({iconUrl: './markers/Assault.png'});
   var larcenyIcon = new FelonyIcon({iconUrl: './markers/Larceny.png'});
@@ -56,76 +54,29 @@ whenDocumentLoaded(() => {
   var abortIcon = new FelonyIcon({iconUrl: './markers/Abortion.png'});
 
   var assaults = L.layerGroup();
-  assaults.addTo(map);
-
+  assaults.addTo(map); 
   var larcenies = L.layerGroup();
-  larcenies.addTo(map);
-
   var robberies = L.layerGroup();
-  larcenies.addTo(map);
-
   var murders = L.layerGroup();
-  murders.addTo(map);
-  
   var burglaries = L.layerGroup();
-  burglaries.addTo(map);
-  
   var prostitution = L.layerGroup();
-  prostitution.addTo(map);
-  
   var weapons = L.layerGroup();
-  weapons.addTo(map);
-  
   var forgery = L.layerGroup();
-  forgery.addTo(map);
-  
   var rape = L.layerGroup();
-  rape.addTo(map);
-
   var misc = L.layerGroup();
-  misc.addTo(map);
-
   var carTheft = L.layerGroup();
-  carTheft.addTo(map);
-
   var drugs = L.layerGroup();
-  drugs.addTo(map);
-
   var kidnapping = L.layerGroup();
-  kidnapping.addTo(map);
-
   var homicide = L.layerGroup();
-  homicide.addTo(map);
-
   var sex = L.layerGroup();
-  sex.addTo(map);
-
   var gambling = L.layerGroup();
-  gambling.addTo(map);
-
   var mischief = L.layerGroup();
-  mischief.addTo(map);
-
   var arson = L.layerGroup();
-  arson.addTo(map);
-
   var fraud = L.layerGroup();
-  fraud.addTo(map);
-
   var intox = L.layerGroup();
-  intox.addTo(map);
-
   var stolen = L.layerGroup();
-  stolen.addTo(map);
-
   var abort = L.layerGroup();
-  abort.addTo(map);
 
-
-  
-
-  var baseMaps = {
-  };
 
   var overlayMarkers = {
     "Assaults" : assaults,
@@ -140,7 +91,7 @@ whenDocumentLoaded(() => {
     "Car Theft" : carTheft,
     "Drugs" : drugs,
     "Kidnapping": kidnapping,
-    "Homicide" : homicide,
+    "Negligent Homicide" : homicide,
     "Sex Crimes" : sex,
     "Gambling" : gambling,
     "Mischief" : mischief,
@@ -152,25 +103,54 @@ whenDocumentLoaded(() => {
     "Misc.": misc
   }
 
-  L.control.layers(baseMaps, overlayMarkers).addTo(map);
+  const markerLimit = 150;
+  
+  var layersControl = L.control.layers(null, overlayMarkers).addTo(map);
+  
+  // Add text blurb to the layer control (only visible on hover like the control panel)
+  var controlContainer = layersControl.getContainer();
+  if (controlContainer) {
+    // Find the panel that contains the layer list (this is what shows/hides on hover)
+    var controlPanel = controlContainer.querySelector('.leaflet-control-layers-list') || 
+                      controlContainer.querySelector('.leaflet-control-layers-overlays') ||
+                      controlContainer;
+    
+    var infoDiv = document.createElement('div');
+    infoDiv.className = 'leaflet-control-layers-info';
+    infoDiv.style.cssText = 'padding: 5px 10px; font-size: 11px; color: #333; border-bottom: 1px solid #ccc; background-color: #f9f9f9;';
+    infoDiv.textContent = `# of cases for each category capped at ${markerLimit} for usability`;
+    
+    // Insert before the panel content so it appears at the top
+    if (controlPanel.firstChild) {
+      controlPanel.insertBefore(infoDiv, controlPanel.firstChild);
+    }
+  }
 
   setTimeout(function() {
     map.setView([40.7590, -73.9845], 15, {tiltDegrees:15.0});
   }, 5000);
 
+  const felCount = new Map();
   
   $.getJSON( "felonies.json", function( data ) { 
-    var i=0;
     $.each(JSON.parse(data), function(k, fel){
+      const felDesc = fel.OFNS_DESC;
+
+      if (felCount.get(felDesc) >= markerLimit) {
+        return true; // continue
+      }
+      felCount.set(felDesc, (felCount.get(felDesc) || 0) + 1);
+
       var iconFel;
       var layer = misc;
-      switch(fel.OFNS_DESC){
+      switch(felDesc){
         case "FELONY ASSAULT": 
         iconFel = assaultIcon;
         layer = assaults;
         break;
         case "ROBBERY":
         iconFel = robberyIcon;
+        layer = robberies;
         break;
         case "GRAND LARCENY":
         iconFel = larcenyIcon;
@@ -259,9 +239,10 @@ whenDocumentLoaded(() => {
       {
         title: fel.OFNS_DESC,
         icon: iconFel
-      }).addTo(map);
+      });
 
       layer.addLayer(marker);
+
       var popup = "<strong>Type: </strong>" +fel.OFNS_DESC +"</br>" 
       +"<strong>Description: </strong>" +fel.PD_DESC +"</br>"
       +"<strong>Date: </strong>" +fel.CMPLNT_FR_DT +"    <strong>Time: </strong>" +fel.CMPLNT_FR_TM  +"</br>" 
@@ -270,11 +251,6 @@ whenDocumentLoaded(() => {
       +"<strong> Suspect: </strong><ul><li>Age: " +fel.SUSP_AGE_GROUP +"</li><li>Race: " +fel.SUSP_RACE +"</li><li>Sex: " +fel.SUSP_SEX +"</li></ul>"
       +"<strong> Victim: </strong><ul><li>Age: " +fel.VIC_AGE_GROUP +"</li><li>Race: " +fel.VIC_RACE +"</li><li>Sex: " +fel.VIC_SEX +"</li></ul>";
       marker.bindPopup(popup);
-      i += 1;
-      if (i>3000){
-        return false;
-      }
     });
-    
   });
 });
